@@ -12,15 +12,16 @@ import { PROFILE, RISK_IDS } from '../content/profile.js';
 import { SCRIPT_GROUPS, SCRIPTS } from '../content/scripts.js';
 import { currentDay } from '../engine/game.js';
 import { wordCount } from '../engine/grader.js';
+import { prompterOn, prompterSwitch } from './prompter.js';
 
-const MODE_NAME = {
+export const MODE_NAME = {
   choose: 'Choice', encounter: 'Timed moment', type: 'Written', speak: 'Spoken', pitch: 'Pitch', sort: 'Sort',
   order: 'Order', pick: 'Pick', compress: 'Compress', convo: 'Conversation',
 };
 const GRADE_RANK = { S: 0, A: 1, B: 2, C: 3, D: 4 };
 const reached = () => Math.min(currentDay(app.save, MAX_DAY), MAX_DAY);
 const weekOf = n => Math.ceil(n / 7);
-const scriptsFor = id => SCRIPTS.filter(x => x.scn.includes(id));
+export const scriptsFor = id => SCRIPTS.filter(x => x.scn.includes(id));
 
 // Filters live for the session so Back returns to the same view.
 const filt = { q: '', week: 0, mode: '', npc: '', risk: '', unplayed: false };
@@ -125,6 +126,7 @@ export function atlas(main, arg = '') {
     tile('dossier', 'user', 'Your dossier', `Strengths, gaps and the ${RISK_IDS.length} risks the scenes train`),
     tile('lessons', 'book', 'Lessons', `${Object.keys(LESSONS).length} short lessons, narrated`),
     tile('den', 'snake', 'Snake den', 'Who has turned into a snake, and how to charm them back'),
+    tile('study', 'book', 'Study library', 'Every challenge, answer, follow-up and script, to read at your own pace'),
     tile('drill', 'chat', 'Follow-up drill', `${follows} questions with sample answers`));
 
   const search = h('input', { type: 'search', id: 'atlas-q', placeholder: 'Search scenes, cues, follow-ups', value: filt.q, autocomplete: 'off' });
@@ -222,7 +224,7 @@ const quotedBy = raw => /^\s*["“]/.test(String(raw || ''));
 
 function gradeTag(g) { return h('b', { class: 'num gtag g-' + g, text: g }); }
 
-function answerScripts(scn) {
+export function answerScripts(scn) {
   const sec = h('section', { class: 'panel stack' }, h('h2', { class: 'h3', text: 'The script' }));
   const id = scn.id;
   if (scn.opts) {
@@ -305,6 +307,7 @@ function drillItem(scn, f, i) {
     }
   } });
   const n = wordCount(F(f.a));
+  if (prompterOn()) { answer.hidden = false; reveal.setAttribute('aria-expanded', 'true'); reveal.textContent = 'Hide the sample'; }
   answer.append(h('div', { class: 'row', style: { justifyContent: 'space-between' } }, h('b', { text: 'A strong answer' }), h('span', { class: 'muted num', text: `${n} words` })),
     h('p', { class: 'say', text: F(f.a) }),
     spokenLine({ id: `fa:${scn.id}:${i}`, raw: f.a, kind: 'answer', place: scn.place }));
@@ -362,13 +365,13 @@ export function drillPage(main) {
   main.append(h('div', { class: 'section', style: { maxWidth: '860px', margin: '0 auto' } },
     h('a', { href: '#atlas', class: 'link back' }, icon('arrow', 16), ' Practice Atlas'),
     sectionHead('Follow-up drill', `${pool.length} questions people ask after the first answer${filt.risk ? `, filtered to ${filt.risk} ${PROFILE.risks[filt.risk].name}` : ''}. Answer aloud, then reveal the sample.`),
-    h('div', { class: 'row', style: { justifyContent: 'space-between' } }, counter, h('div', { class: 'row' }, prev, shuf, next)), host));
+    h('div', { class: 'row', style: { justifyContent: 'space-between' } }, counter, h('div', { class: 'row' }, prompterSwitch(() => { if (pool.length) show(); }), prev, shuf, next)), host));
   if (pool.length) show();
 }
 
 // ---------------- script library ----------------
 
-function scriptCard(it) {
+export function scriptCard(it) {
   const copyBtn = h('button', { class: 'btn ghost small', type: 'button', text: 'Copy', onclick: async () => { try { await navigator.clipboard.writeText(F(it.text)); toast('Copied.'); } catch { toast('Copy is blocked here. Select the text instead.'); } } });
   return h('article', { class: 'script', id: 'script-' + it.id },
     h('div', { class: 'row', style: { justifyContent: 'space-between', alignItems: 'baseline' } }, h('h3', { text: F(it.title) }), it.when ? h('span', { class: 'chip', text: it.when }) : null),

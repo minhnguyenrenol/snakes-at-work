@@ -24,3 +24,7 @@
 - Films (app/js/cine/snakes.jsx) use anticipation, squash and stretch, hit-stop, shake and a puff of smoke. Strike, Becoming ("Bạn đã thành Rắn Công Sở!"), Shed ("Lột xác!") and Charm. Tall 720x1080 layout under 640px wide. Reduced motion shows the last frame and two sound cues.
 - Sounds are generated (hiss, rattle, slither, strike, venom, transform, shed, poof) and fire from frame cues.
 - Snake mode skin: a faint scale texture on the page and a wiggling logo when you are a snake.
+
+## Script prompter and study library (v4)
+- The prompter switch is a pressed-state button (marigold when on) with an icon and a text label, never colour alone. The script panel is capped at about half the viewport height and scrolls.
+- The study library is plain disclosure rows grouped by day; each row builds its body when first opened to keep the page light.

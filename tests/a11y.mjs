@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { open } from './smoke.mjs';
 const axe = readFileSync(path.join(process.env.TLG_TOOLS || '.', 'node_modules/axe-core/axe.min.js'), 'utf8');
-const routes = ['#today', '#day-1', '#scn-d1_first', '#scn-d1_heads', '#scn-d1_cut', '#people', '#npc-ethan', '#progress', '#library', '#portfolio', '#settings', '#coach', '#more', '#dojo', '#atlas', '#sheet-d3_coffee', '#sheet-d1_cut', '#scripts', '#dossier', '#lessons', '#lessons-l1', '#drill', '#practice-d18_peer', '#den', '#sheet-trap_gossip', '#scn-trap_credit'];
+const routes = ['#today', '#day-1', '#scn-d1_first', '#scn-d1_heads', '#scn-d1_cut', '#people', '#npc-ethan', '#progress', '#library', '#portfolio', '#settings', '#coach', '#more', '#dojo', '#atlas', '#sheet-d3_coffee', '#sheet-d1_cut', '#scripts', '#dossier', '#lessons', '#lessons-l1', '#drill', '#practice-d18_peer', '#den', '#sheet-trap_gossip', '#scn-trap_credit', '#study'];
 let total = 0;
 for (const scheme of ['light', 'dark']) for (const width of [1280, 390]) {
   const { browser, page } = await open({ width, scheme });

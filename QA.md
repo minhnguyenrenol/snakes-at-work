@@ -43,3 +43,9 @@ Screenshots: qa/shots/<width>-<scheme>-<mock>/.
 - Fixed during QA: the films were too small inside the dialog panel; the NỌC stamp glyph; drops overlapping the becoming title; on phones the films now switch to a tall 720x1080 layout with captions under the snake.
 - Voices: 98 new clips recorded for the trap scenes and renamed lines; 1185 clips in 22 sprites, 57 MB.
 - axe at 390px reports target-size on the Atlas filter selects only because, with the new Snake den tile, they start at the bottom edge of the first screen behind the fixed tab bar; they scroll clear and are 34px tall. Accepted, no other violations.
+
+## Version 4 QA (10 Oct 2026)
+- New: script prompter (Settings switch, a button on every challenge and on the follow-up drill) and the Study library (#study: every challenge, answer, follow-up with sample answer and script, with search, week and mode filters, and a .md export).
+- The prompter costs one hint of XP on a challenge (recorded as an aided attempt) and never changes the grade or the snake rules.
+- tests/study.mjs passes at 1280 dark, 390 dark and 1280 light with reduced motion. Unit, snake, v2 and e2e runs still pass.
+- axe at 390px flags one study row only because it sits at the bottom edge behind the fixed tab bar until scrolled; same accepted artifact as the Atlas filters.

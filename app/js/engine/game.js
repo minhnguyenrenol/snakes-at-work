@@ -31,7 +31,7 @@ export function newSave(now = Date.now()) {
   return {
     v: SAVE_VERSION, createdAt: now, updatedAt: now, rev: 0,
     player: { name: 'Minh' },
-    settings: { theme: 'system', sound: true, motion: 'system', encounter: 3, ai: true, playAhead: false, voice: true, amb: true, snakes: true, dyslexia: false, vol: { voice: 0.9, sfx: 0.6, amb: 0.35 }, names: {} },
+    settings: { theme: 'system', sound: true, motion: 'system', encounter: 3, ai: true, playAhead: false, voice: true, amb: true, snakes: true, prompter: false, dyslexia: false, vol: { voice: 0.9, sfx: 0.6, amb: 0.35 }, names: {} },
     days: {},            // n -> { step, done, startedAt, doneAt, date }
     scn: {},             // scenario id -> record
     tags: {},            // tag -> day first acquired
@@ -90,7 +90,7 @@ export function normalizeSave(raw) {
     out.settings.theme = ['system', 'light', 'dark'].includes(st.theme) ? st.theme : 'system';
     out.settings.motion = ['system', 'full', 'reduced'].includes(st.motion) ? st.motion : 'system';
     out.settings.encounter = Math.max(0, Math.min(10, num(st.encounter, 3)));
-    for (const k of ['sound', 'ai', 'playAhead', 'voice', 'amb', 'dyslexia', 'snakes']) out.settings[k] = typeof st[k] === 'boolean' ? st[k] : base.settings[k];
+    for (const k of ['sound', 'ai', 'playAhead', 'voice', 'amb', 'dyslexia', 'snakes', 'prompter']) out.settings[k] = typeof st[k] === 'boolean' ? st[k] : base.settings[k];
     // Saves from before recorded voices (no vol yet) get the new sound defaults once.
     if (!isObj(st.vol)) { out.settings.voice = true; out.settings.sound = true; out.settings.amb = true; }
     for (const k of ['voice', 'sfx', 'amb']) out.settings.vol[k] = Math.max(0, Math.min(1, num(st.vol?.[k], base.settings.vol[k])));

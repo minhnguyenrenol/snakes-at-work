@@ -45,3 +45,6 @@ Published v2 to the same URL on 5 Oct 2026 (page + 23 audio files, 52 MB). Waiti
 
 ## Version 3 (6 Oct): Snakes at Work · Rắn công sở
 Done and published: rename, real project names removed, snake layer (engine/snakes.js, ui/snakes.js, cine/snakes.jsx, cine/snake-art.js), 14 snake-trap scenes (content/traps.js) with follow-ups, re-recorded voices, phone film layout, tests/snakes.mjs. Waiting on Minh's review.
+
+## Version 4 (10 Oct): script prompter and study library
+Done: ui/prompter.js, ui/study.js, #study route, Settings switch, drill honours the prompter, tests/study.mjs. Pushed to https://github.com/minhnguyenrenol/snakes-at-work (Pages deploy by Actions) and republished to the Artifact.

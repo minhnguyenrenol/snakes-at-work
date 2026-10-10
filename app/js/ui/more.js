@@ -11,6 +11,7 @@ import { newSave, normalizeSave, ENDINGS, decideEnding, currentDay, STATS, STAT_
 
 export function more(main) {
   const items = [
+    ['study', 'book', 'Study library', 'Every challenge, answer, follow-up and script, to read yourself.'],
     ['den', 'snake', 'Snake den', 'Who is a snake right now, and how to charm them back.'],
     ['atlas', 'map', 'Practice Atlas', 'Every scene, script and follow-up in one map.'],
     ['scripts', 'script', 'Script library', 'Ready-to-say lines, read aloud.'],
@@ -76,6 +77,7 @@ export function settings(main) {
       h('div', { class: 'field' }, h('span', { class: 'muted', text: 'Timed moments (walk-pasts, phones buzzing)' }), radios('encounter', st.encounter, [[3, 'Normal'], [6, 'Double time'], [0, 'No timer']], v => set('encounter', Number(v)))),
       toggle('Play ahead', 'Open the next day without waiting for tomorrow. Spacing works better if you wait.', st.playAhead, v => set('playAhead', v))),
     h('div', { class: 'panel stack' }, h('h2', { class: 'h3', text: 'Coaching' }),
+      toggle('Script prompter', 'Show the script on every question, and reveal the sample answer on every follow-up, for the moments you forget what to say. Costs a little XP on a challenge, never the grade. You can also flip it from any challenge.', st.prompter === true, v => set('prompter', v)),
       toggle('Grade with T+10 (Claude)', app.caps.sample ? 'Written answers are graded on the rubric by Claude, through your account. The first use asks your permission. Off means instant rule-based grades.' : 'Not available in this view. Instant rule-based grades are used.', st.ai, v => set('ai', v))),
     h('div', { class: 'panel stack' }, h('h2', { class: 'h3', text: 'Private names' }), h('p', { class: 'muted', text: 'Rename anyone in the story to the person they remind you of. These names stay in this browser only; they are never sent to your account or to Claude.' }), relabel),
     h('div', { class: 'panel stack' }, h('h2', { class: 'h3', text: 'Your data' }), h('p', { class: 'muted', text: `Saved ${app.store.status === 'synced' ? 'to your account and this browser' : 'in this browser'}.` }),

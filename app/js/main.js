@@ -5,6 +5,7 @@ import { app, applySettings, go, stopSpeech } from './ui/core.js';
 import { stopVoice, loadIndex } from './ui/voice.js';
 import { ambience } from './ui/sound.js';
 import { venomChip, den } from './ui/snakes.js';
+import { study } from './ui/study.js';
 import { atlas, sheet, practiceOpts, scriptLibrary, dossier, lessons, drillPage } from './ui/atlas.js';
 import { icon } from './ui/art.js';
 import { stopAllCine } from './ui/cinema.js';
@@ -26,7 +27,7 @@ const NAV = [
   ['settings', 'gear', 'Settings'],
 ];
 const BOTNAV = [['today', 'today', 'Today'], ['atlas', 'map', 'Atlas'], ['people', 'people', 'People'], ['progress', 'chart', 'Progress'], ['more', 'more', 'More']];
-const SECTION_OF = { day: 'today', scn: 'library', review: 'today', dojo: 'library', npc: 'people', ending: 'today', sheet: 'atlas', practice: 'atlas', scripts: 'atlas', dossier: 'atlas', lessons: 'atlas', drill: 'atlas', den: 'today' };
+const SECTION_OF = { day: 'today', scn: 'library', review: 'today', dojo: 'library', npc: 'people', ending: 'today', sheet: 'atlas', practice: 'atlas', scripts: 'atlas', dossier: 'atlas', lessons: 'atlas', drill: 'atlas', study: 'atlas', den: 'today' };
 
 let mainEl, whereEl, syncEl, navEls = [];
 
@@ -100,6 +101,7 @@ function render() {
     case 'dossier': dossier(main, arg); break;
     case 'lessons': lessons(main, arg.toUpperCase()); break;
     case 'drill': drillPage(main); break;
+    case 'study': study(main); break;
     case 'den': den(main); break;
     case 'people': people(main); break;
     case 'npc': people(main, NPCS[arg] ? arg : null); break;

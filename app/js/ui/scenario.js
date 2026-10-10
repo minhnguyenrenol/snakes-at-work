@@ -14,6 +14,7 @@ import { ruleGrade, buildGradePrompt, validateModelGrade, wordCount, questionMar
 import { fillChecks, fillPattern } from '../engine/text.js';
 import { DIMS, BANDS, band } from '../engine/rubric.js';
 import { choiceResult, gradedResult, sortResult, orderResult, pickResult, compressResult, convoResult, commit, extrasFrom, promoteIfPassed } from '../engine/play.js';
+import { prompterBar } from './prompter.js';
 
 // ---------------- helpers ----------------
 
@@ -229,13 +230,17 @@ export function runScenario(main, scn, opts) {
   const stage = h('div', { class: 'stage' });
   main.append(stage);
   const sc = scene(scn);
-  stage.append(head(scn, opts.onExit), sc.el);
+  const pr = prompterBar(scn);
+  stage.append(head(scn, opts.onExit), pr.el, sc.el);
   const dock = h('div', { class: 'stack' });
   stage.append(dock);
   window.scrollTo({ top: 0, behavior: reducedMotion() ? 'auto' : 'smooth' });
 
   const setting = h('p', { class: 'setting', text: F(scn.setting) });
-  const finish = (result, extras = {}, more = {}) => finishScenario(main, scn, result, extras, opts, more);
+  const finish = (result, extras = {}, more = {}) => {
+    if (pr.used()) result.hints = Math.max(result.hints || 0, 1);
+    return finishScenario(main, scn, result, extras, opts, more);
+  };
 
   if (scn.mode === 'convo') return runConvo(scn, sc, dock, setting, finish);
 
